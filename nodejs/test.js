@@ -10,7 +10,7 @@ startSpeak()
 function startSpeak() {
     prompt.get(['message'], (error, result)=> {
         say.speak(result.message, '', 5.0, ()=> {
-            if(result.message == 'Goodbye') process.exit()
+            if(result.message == 'exit') process.exit()
             startSpeak()
         })
     })
