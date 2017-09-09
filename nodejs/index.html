@@ -1,0 +1,11 @@
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+   var url = window.location.host;
+       var socket = io.connect(url);
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+</script>

@@ -1,17 +1,37 @@
+// Bước 1: Import module http
+var http = require('http');
+const say = require('say')
+const prompt = require('prompt')
+// Bước 2: Khởi tạo server
 
-const Postmen = require('postmen');
-// TODO key of the Postmen instance
-let api_key = 'api-key';
-// TODO region of the Postmen instance
-let region = 'sandbox';
+var server = http.createServer(function(request, response){
+   // Biến request: là biến lưu trữ thông tin gửi lên của client
+   // Biến response: là biến lưu trữ các thông tin trả về cho client
+    
+   // Thiết lập Header
+   response.writeHead(200, {
+       "Context-type" : "text/plain"
+   });
+    // Show thông tin
+ 
+   // Kết thúc
+   response.end();
 
-let postmen = Postmen(api_key, region);
-
-// get all labels by using callback
-postmen.get('/labels', function (err, result) {
-	if (err) {
-		console.log(err);
-	} else {
-		console.log(result);
-	}
 });
+     
+prompt.start();
+startSpeak();
+
+function startSpeak() {
+    prompt.get(['message'], (error, result)=> {
+        say.speak(result.message, '', 5.0, ()=> {
+            if(result.message == 'exit') process.exit()
+            startSpeak()
+        })
+    })
+}
+// Bước 3: Lắng nghe cổng 3000 thì thực hiện chương trình
+server.listen(3000, function(){
+   console.log('Connected Successfull!');
+});
+
