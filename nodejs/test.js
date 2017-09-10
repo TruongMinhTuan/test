@@ -12,6 +12,7 @@ function startSpeak() {
         say.speak(result.message, '', 5.0, ()=> {
             if(result.message == 'exit') process.exit()
             startSpeak()
+            say.stop(DelayNode);
         })
     })
 }

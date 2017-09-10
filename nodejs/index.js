@@ -12,17 +12,17 @@ app.engine('jade', require('jade').__express);
 // });
 app.get('/', function (req, res) {
     res.render("index");
-       // Chuan bi output trong dinh dang JSON
+       //output trong dinh dang JSON
        response = {
            mess:req.query.mess,
            name:req.query.name,
                    
        };
        say.speak(response.mess);
-       console.log('Name: '+response.name+' message: '+response.mess+' -->>>Postmen request');
-       res.end(JSON.stringify(response));
-     
-    })
+       console.log('Name: '+response.name+' message: '+response.mess+' -->>>request');
+     //JSON output
+      res.end(JSON.stringify(response));
+      })
 //Socket
 app.use(express.static(__dirname + '/public'));
 
@@ -33,9 +33,11 @@ const io = require('socket.io').listen(app.listen('8080'));
 io.sockets.on('connection', function (socket) {
     socket.emit('message', { message: 'welcome to the chat' });
     socket.on('send', function (data) {
+
+
         io.sockets.emit('message', data);
         console.log('Name: '+data.username +' message: '+data.message+' -->>>Browser');
-                 
+       
         say.speak(data.message);
     });
 });

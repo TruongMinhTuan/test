@@ -1,7 +1,5 @@
 
-   window.onload = function() {
-  
-        
+   window.onload = function() {       
         var messages = [];
         var url = window.location.host;
         var socket = io.connect(url);
@@ -11,21 +9,22 @@
         var name = document.getElementById("name");
     
         socket.on('message', function (data) {
-            if(data.message) {
-                messages.push(data);
-                temp=messages;
-            
-                var html = '';
-                for(var i=0; i<messages.length; i++) {
-                    html += '<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
-                    html += messages[i].message + '<br />';
-                }
-                content.innerHTML = html;
-  
-
-            } else {
-                console.log("There is a problem:", data);
+        if(data.message) {
+            messages.push(data);
+            temp=messages;
+        
+            var html = '';
+            for(var i=0; i<messages.length; i++) {
+                html += '<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+                html += messages[i].message + '<br />';
             }
+            content.innerHTML = html;
+
+
+        } else {
+            console.log("There is a problem:", data);
+        }
+           
         });
                    
         sendButton.onclick = function() {
